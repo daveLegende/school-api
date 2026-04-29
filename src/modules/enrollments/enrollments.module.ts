@@ -6,12 +6,14 @@ import { EnrollStudentUseCase } from './application/use-cases/enroll-student.use
 import { EnrollmentController } from './presentation/controllers/enrollment.controller';
 import { UsersModule } from '../users/users.module';
 import { AcademicModule } from '../academic/academic.module';
+import { FinanceModule } from '../finance/finance.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([EnrollmentOrmEntity]),
     UsersModule,
     AcademicModule,
+    FinanceModule,
   ],
   controllers: [EnrollmentController],
   providers: [

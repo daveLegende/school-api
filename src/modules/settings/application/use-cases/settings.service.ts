@@ -22,6 +22,7 @@ export class SettingsService {
         timezone: defaultValue.timezone,
         primaryLanguage: defaultValue.primaryLanguage,
         defaultGradingSystem: defaultValue.defaultGradingSystem,
+        absencePolicy: defaultValue.absencePolicy,
       });
       await this.repo.save(entity);
     }
@@ -50,6 +51,7 @@ export class SettingsService {
       entity.timezone,
       entity.primaryLanguage,
       entity.defaultGradingSystem,
+      entity.absencePolicy,
     );
   }
 }

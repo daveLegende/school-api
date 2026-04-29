@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { AbsencePolicy } from '../../domain/enums/absence-policy.enum';
 
 @Entity('settings')
 export class SettingsOrmEntity {
@@ -34,4 +35,11 @@ export class SettingsOrmEntity {
 
   @Column({ default: 20 })
   defaultGradingSystem: number;
+
+  @Column({
+    type: 'enum',
+    enum: AbsencePolicy,
+    default: AbsencePolicy.ZERO,
+  })
+  absencePolicy: AbsencePolicy;
 }

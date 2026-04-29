@@ -4,6 +4,7 @@ import { Enrollment } from "../../domain/entities/enrollment.entity";
 import { EnrollStudentDto } from "../../presentation/dtos/enroll-student.dto";
 import type { UserRepository } from "../../../users/domain/repositories/user.repository.interface";
 import type { AcademicRepository } from "../../../academic/domain/repositories/academic.repository.interfaces";
+import { GenerateInvoiceUseCase } from "../../../finance/application/use-cases/generate-invoice.usecase";
 
 @Injectable()
 export class EnrollStudentUseCase {
@@ -11,6 +12,7 @@ export class EnrollStudentUseCase {
     @Inject('EnrollmentRepository') private enrollmentRepo: EnrollmentRepository,
     @Inject('UserRepository') private userRepo: UserRepository,
     @Inject('AcademicRepository') private academicRepo: AcademicRepository,
+    private generateInvoiceUseCase: GenerateInvoiceUseCase,
   ) {}
 
   async execute(dto: EnrollStudentDto): Promise<Enrollment> {
@@ -29,6 +31,21 @@ export class EnrollStudentUseCase {
 
     // 4. Create enrollment
     const enrollment = Enrollment.create(dto.studentId, dto.classId, dto.schoolYearId);
-    return this.enrollmentRepo.save(enrollment);
+    const savedEnrollment = await this.enrollmentRepo.save(enrollment);
+
+    // 5. Generate Invoice
+    try {
+      await this.generateInvoiceUseCase.execute(
+        dto.studentId, 
+        savedEnrollment.id!, 
+        dto.classId, 
+        dto.schoolYearId
+      );
+    } catch (error) {
+      // We log but don't fail enrollment if invoice fails (though ideally we should transaction)
+      console.error('Invoice generation failed:', error.message);
+    }
+
+    return savedEnrollment;
   }
 }

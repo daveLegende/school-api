@@ -1,3 +1,5 @@
+import { AbsencePolicy } from '../enums/absence-policy.enum';
+
 export class Settings {
   constructor(
     public readonly id: string | null,
@@ -11,6 +13,7 @@ export class Settings {
     public timezone: string,
     public primaryLanguage: string,
     public defaultGradingSystem: number, // 20 or 100
+    public absencePolicy: AbsencePolicy,
   ) {}
 
   static createDefault(): Settings {
@@ -26,6 +29,7 @@ export class Settings {
       'UTC',
       'French',
       20,
+      AbsencePolicy.ZERO,
     );
   }
 }

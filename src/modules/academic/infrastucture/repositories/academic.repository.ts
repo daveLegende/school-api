@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, In } from "typeorm";
 import { AcademicRepository } from "../../domain/repositories/academic.repository.interfaces";
 import { Level, Series, Subject, Class } from "../../domain/entities/academic.entities";
 import { 
@@ -85,6 +85,14 @@ export class TypeOrmAcademicRepository implements AcademicRepository {
   async findSubjectById(id: string): Promise<Subject | null> {
     const entity = await this.subjectRepo.findOne({ where: { id } });
     return entity ? new Subject(entity.id, entity.name, entity.code, entity.coefficient) : null;
+  }
+
+  async findSubjectsByIds(ids: string[]): Promise<Subject[]> {
+    if (ids.length === 0) return [];
+    const entities = await this.subjectRepo.find({
+      where: { id: In(ids) }
+    });
+    return entities.map(e => new Subject(e.id, e.name, e.code, e.coefficient));
   }
 
   // Classes

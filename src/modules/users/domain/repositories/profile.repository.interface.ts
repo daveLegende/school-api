@@ -5,4 +5,5 @@ export interface ProfileRepository {
   saveProfessor(profile: ProfessorProfile): Promise<ProfessorProfile>;
   saveParent(profile: ParentProfile): Promise<ParentProfile>;
   saveStaff(profile: StaffProfile): Promise<StaffProfile>;
+  findStudentByUserId(userId: string): Promise<StudentProfile | null>;
 }

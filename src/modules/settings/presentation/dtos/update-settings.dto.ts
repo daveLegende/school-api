@@ -1,5 +1,6 @@
-import { IsOptional, IsString, IsNumber, IsEmail, IsUrl } from "class-validator";
+import { IsOptional, IsString, IsNumber, IsEmail, IsUrl, IsEnum } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { AbsencePolicy } from "../../domain/enums/absence-policy.enum";
 
 export class UpdateSettingsDto {
   @ApiProperty({ required: false })
@@ -51,4 +52,9 @@ export class UpdateSettingsDto {
   @IsOptional()
   @IsNumber()
   defaultGradingSystem?: number;
+
+  @ApiProperty({ required: false, enum: AbsencePolicy })
+  @IsOptional()
+  @IsEnum(AbsencePolicy)
+  absencePolicy?: AbsencePolicy;
 }

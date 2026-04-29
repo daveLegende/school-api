@@ -15,6 +15,7 @@ export interface AcademicRepository {
   saveSubject(subject: Subject): Promise<Subject>;
   findAllSubjects(): Promise<Subject[]>;
   findSubjectById(id: string): Promise<Subject | null>;
+  findSubjectsByIds(ids: string[]): Promise<Subject[]>;
 
   // Classes
   saveClass(classe: Class): Promise<Class>;

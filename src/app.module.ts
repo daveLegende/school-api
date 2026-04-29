@@ -11,6 +11,8 @@ import { AcademicModule } from './modules/academic/academic.module';
 import { AcademicYearsModule } from './modules/academic-years/academic-years.module';
 import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { EvaluationsModule } from './modules/evaluations/evaluations.module';
+import { FinanceModule } from './modules/finance/finance.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { SettingsModule } from './modules/settings/settings.module';
     AcademicYearsModule,
     EnrollmentsModule,
     SettingsModule,
+    EvaluationsModule,
+    FinanceModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',

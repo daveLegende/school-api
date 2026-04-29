@@ -85,4 +85,13 @@ export class TypeOrmProfileRepository implements ProfileRepository {
       saved.dateOfBirth, saved.position, saved.branchId
     );
   }
+
+  async findStudentByUserId(userId: string): Promise<StudentProfile | null> {
+    const entity = await this.studentRepo.findOne({ where: { userId } });
+    if (!entity) return null;
+    return new StudentProfile(
+      entity.id, entity.userId, entity.firstName, entity.lastName,
+      entity.dateOfBirth, entity.matricule, entity.classId, entity.branchId
+    );
+  }
 }
